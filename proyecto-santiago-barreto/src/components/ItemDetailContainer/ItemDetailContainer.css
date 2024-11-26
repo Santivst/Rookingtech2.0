@@ -1,0 +1,16 @@
+.itemDetailContainer-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemDetailContainer-h2 {
+    margin: 20px;
+    padding: 20px;
+    color: cyan;
+    background-color: brown;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
