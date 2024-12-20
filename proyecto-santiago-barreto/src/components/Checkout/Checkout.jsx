@@ -1,3 +1,5 @@
+import "./Checkout.css"
+
 import { useState } from "react"
 import { useCart } from "../../hooks/useCart"
 import {addDoc, collection, documentId, getDocs, query, where, writeBatch } from "firebase/firestore";
@@ -6,7 +8,6 @@ import {db} from "../../services/firebase"
 
 
 function Checkout() {
-    // const [form, setForm] = useState ({})
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono, setTelefono] = useState("");
@@ -14,6 +15,7 @@ function Checkout() {
 
     const [loading, setLoading] = useState(false);
     const [orderCreated, setOrderCreated] = useState(false)
+    const [orderDetails, setOrderDetail] = useState(null)
 
     const { cart, totalQuantity, getTotal, clearCart } = useCart()
     const total = getTotal()
@@ -65,6 +67,7 @@ function Checkout() {
                 const orderAdded = await addDoc(orderRef, objOrder)
                 console.log(`El id de su orden es: ${orderAdded.id}`)
                 setOrderCreated(true)
+                setOrderDetail(objOrder)
                 clearCart()
             } else {
                 console.log("Hay productos sin stock")
@@ -77,48 +80,72 @@ function Checkout() {
     }
 
     if (loading) {
-        return <h1>Se está generando la orden</h1>
+        return <h1 className="checkout_loading-h1">Se está generando la orden</h1>
     }
 
-    if(orderCreated){
-        return <h1>La orden fue creada correctamente</h1>
-    }
+    if (orderCreated && orderDetails) {
+      return (
+        <>
+              <h1 className="checkout_loading-h1">La orden fue creada exitosamente!</h1>
+        <div className="checkout_summary-container">
+          <div className="checkout_summary">
+              <h2>Resumen de la compra:</h2>
+              <p><strong>Nombre:</strong> {orderDetails.buyer.firstName} {orderDetails.buyer.lastName}</p>
+              <p><strong>Teléfono:</strong> {orderDetails.buyer.phone}</p>
+              <p><strong>Dirección:</strong> {orderDetails.buyer.addres}</p>
+              <p><strong>Total:</strong> ${orderDetails.total}</p>
+              <h3>Productos adquiridos:</h3>
+              <ul>
+                  {orderDetails.items.map((item) => (
+                      <li key={item.id}>
+                          {item.name} - Cantidad: {item.quantity} - Precio: ${item.price}
+                      </li>
+                  ))}
+              </ul>
+          </div>
+        </div>
+        </>
+      );
+  }
     
     
     return (
-        <>
-      {/* form de checkout */}
-      <label htmlFor="nombre">Nombre</label>
-      <input onChange={(e) => setNombre(e.target.value)} value={nombre} />{" "}
-      <br />
-      <label htmlFor="apellido">Apellido</label>
-      <input onChange={(e) => setApellido(e.target.value)} value={apellido} />
-      <br />
-      <label htmlFor="telefono">Telefono</label>
-      <input onChange={(e) => setTelefono(e.target.value)} value={telefono} />
-      <br />
-      <label htmlFor="direccion">Addres</label>
-      <input onChange={(e) => setDireccion(e.target.value)} value={direccion} />
-      <div>
-        {cart.map((item) => (
-          <article key={item.id}>
-            <header>
-              <h2 className="text-secondary text-center bg-info m-5">
-                {item.name}{" "}
-                <span className="badge">Cantidad: {totalQuantity}</span>
-              </h2>
-            </header>
-          </article>
-        ))}
-      </div>
-      <h1 className="text-center">Checkout</h1>
-      {/* formulario */}
-      <div className="d-flex justify-content-center p-3 ">
-        <button className="btn btn-info" onClick={createOrder}>
-          Generar Orden
-        </button>
-      </div>
-    </>
+      <>
+        <div className="checkout_form-container">
+          <div className="checkout_form">
+            <h2 className="checkout_h2">Formulario</h2>
+            <label htmlFor="nombre">Nombre</label>
+            <input onChange={(e) => setNombre(e.target.value)} value={nombre} />{" "}
+            
+            <label htmlFor="apellido">Apellido</label>
+            <input onChange={(e) => setApellido(e.target.value)} value={apellido} />
+            
+            <label htmlFor="telefono">Telefono</label>
+            <input onChange={(e) => setTelefono(e.target.value)} value={telefono} />
+            
+            <label htmlFor="direccion">Dirección</label>
+            <input onChange={(e) => setDireccion(e.target.value)} value={direccion} />
+          </div>
+        </div>
+        <div>
+          {cart.map((item) => (
+            <article key={item.id}>
+              <header>
+                <h2 className="checkout_header-h2 text-center m-5">
+                  {item.name}{" "}
+                  <span className="badge">Cantidad: {item.quantity}</span>
+                </h2>
+              </header>
+            </article>
+          ))}
+        </div>
+        <h1 className="text-center">Checkout</h1>
+        <div className="d-flex justify-content-center p-3 ">
+          <button className="checkout_header-h2 btn" onClick={createOrder}>
+            Generar Orden
+          </button>
+        </div>
+      </>
     );
     }
 

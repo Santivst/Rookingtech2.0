@@ -1,0 +1,42 @@
+.cart_h1 {
+    color: brown;
+    display: flex;
+    justify-content: center;
+}
+
+
+.cart_div-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 0 0;
+}
+
+
+.cart_div {
+    width: 50%;
+    padding: 20px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    border-radius: 20px;
+}
+
+.cart_div h1 {
+    padding: 10px 20px 10px 20px;
+    background-color: rgb(96, 96, 96);
+    border-radius: 20px;
+}
+
+.cart_Link {
+    margin: 50px 0 0 0;
+    text-decoration: none;
+    color: rgb(154, 2, 2);
+}
+
+.cart_Link:hover {
+    color: red;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+}

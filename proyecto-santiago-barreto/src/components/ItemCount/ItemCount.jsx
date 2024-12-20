@@ -1,9 +1,7 @@
 import { useState } from "react";
-// import { useCart } from "../../hooks/useCart";
 
 function ItemCount({initialValue=1, stock, onAdd}) {
     const [cantidad, setCantidad] = useState(initialValue)
-    // const {addItem} = useCart()
 
     const decrement = () => {
         if(cantidad>1){

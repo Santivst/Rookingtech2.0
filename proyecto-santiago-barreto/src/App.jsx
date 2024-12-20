@@ -18,7 +18,9 @@ function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <h1 style={{display:"flex", justifyContent:"center", color:"red"}}>Proyecto Rookingtech</h1>
+        <div className='app_h1'>
+          <h1 style={{display:"flex", justifyContent:"center", color:"red"}}>Proyecto Rookingtech</h1>
+        </div>
         <NavBar/>
         <Routes>
           <Route path="/" element={<Home greeting="¡Bienvenido a la tienda de tecnología Rookingtech!" />}/>

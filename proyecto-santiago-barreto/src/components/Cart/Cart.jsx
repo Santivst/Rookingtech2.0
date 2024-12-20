@@ -1,3 +1,4 @@
+import "./Cart.css"
 
 import { Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart'
@@ -11,14 +12,15 @@ function Cart() {
     const total = getTotal()
 
     if (totalQuantity === 0) {
-        return <h1>No Hay items en el carrito</h1>
+        return <h1 className='cart_h1'>No Hay items en el carrito</h1>
     }
 
     console.log(cart)
 
 
     return (
-        <div>
+    <div className="cart_div-container">
+        <div className="cart_div">
             <h1>Carrito</h1>
             {cart.map((item)=> (
                 <CartItem key={item.id} {...item} />
@@ -27,8 +29,9 @@ function Cart() {
             <div>
                 <button onClick={clearCart}>Limpiar Carrito</button>
             </div>
-            <Link to='/checkout'>Comprar</Link>
+            <Link className="cart_Link" to='/checkout'>Comprar</Link>
         </div>
+    </div>
     )
 }
 
