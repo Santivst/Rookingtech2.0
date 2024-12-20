@@ -35,7 +35,7 @@ function NavBar({title}) {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <CardWidget cartCount={6} />
+                            <CardWidget/>
                         </li>
                     </ul>
                 </div>

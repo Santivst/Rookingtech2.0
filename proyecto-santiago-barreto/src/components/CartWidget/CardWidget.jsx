@@ -1,11 +1,15 @@
 import './CardWidget.css';
 
-function CardWidget({cartCount}) {
+import { Link } from 'react-router-dom';
+import { useCart } from "../../hooks/useCart";
+
+
+function CardWidget() {
+    const {totalQuantity} = useCart()
     return (
-        <a className="nav-link"><img className="cart-widget_img" src="/public/img/shoppingcart.jpg" alt="" /><span>{cartCount}</span></a>
+        <Link className="nav-link" to="/cart"><img className="cart-widget_img" src="/public/img/shoppingcart.jpg" alt="" /><span>{totalQuantity}</span></Link>
+        //<a className="nav-link"><img className="cart-widget_img" src="/public/img/shoppingcart.jpg" alt="" /><span>{totalQuantity}</span></a>
     )
 }
-
-// style={{height: "20px", borderRadius:"10px"}}
 
 export default CardWidget
